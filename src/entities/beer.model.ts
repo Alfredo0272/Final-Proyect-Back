@@ -1,6 +1,5 @@
+import { Types } from 'mongoose';
 import { ImgData } from '../types/img.data.js';
-import { Pub } from './pub.model.js';
-import { User } from './user.model.js';
 
 export type Beer = {
   id: string;
@@ -9,6 +8,6 @@ export type Beer = {
   style: string;
   alcohol: string;
   beerImg: ImgData;
-  author: User;
-  pubs: Pub[];
+  author: Types.ObjectId;
+  pubs: Types.ObjectId[];
 };

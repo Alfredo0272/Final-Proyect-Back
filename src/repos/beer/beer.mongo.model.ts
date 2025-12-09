@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose';
+import { Model, Schema, model } from 'mongoose';
 import { Beer } from '../../entities/beer.model.js';
 
 export const beerSchema = new Schema<Beer>({
@@ -36,12 +36,14 @@ export const beerSchema = new Schema<Beer>({
   },
 });
 
-export const BeerModel = model('Beer', beerSchema, 'beers');
+export const BeerModel: Model<Beer> = model<Beer>('Beer', beerSchema, 'beers');
 
 beerSchema.set('toJSON', {
-  transform(_document, returnedObject) {
-    returnedObject.id = returnedObject._id;
-    delete returnedObject._id;
-    delete returnedObject.__v;
+  virtuals: true,
+  versionKey: false,
+  transform(_doc, returnedObject) {
+    returnedObject.id = returnedObject._id.toString();
+    delete (returnedObject as any)._id;
+    delete (returnedObject as any).__v;
   },
 });

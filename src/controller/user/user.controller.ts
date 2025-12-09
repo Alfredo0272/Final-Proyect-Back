@@ -57,7 +57,11 @@ export class UsersController extends Controller<User> {
         throw new HttpError(404, 'Not Found', 'Beer not found');
       }
 
-      if (user.probada.find((tastedBeer) => tastedBeer.id === beer.id)) {
+      if (
+        user.probada.find(
+          (tastedBeer) => tastedBeer.id?.toString() === beer.id.toString()
+        )
+      ) {
         throw new HttpError(
           409,
           'Conflict',
@@ -91,7 +95,11 @@ export class UsersController extends Controller<User> {
         throw new HttpError(404, 'Not Found', 'Pub not found');
       }
 
-      if (user.visitado.find((visitedPubs) => visitedPubs.id === pub.id)) {
+      if (
+        user.visitado.find(
+          (visitedPub) => visitedPub.id?.toString() === pub.id.toString()
+        )
+      ) {
         throw new HttpError(
           409,
           'Conflict',
@@ -124,7 +132,11 @@ export class UsersController extends Controller<User> {
         throw new HttpError(404, 'Not Found', 'Beer not found');
       }
 
-      if (!user.probada.find((tastedBeer) => tastedBeer.id === beer.id)) {
+      if (
+        !user.probada.find(
+          (tastedBeer) => tastedBeer.id?.toString() === beer.id.toString()
+        )
+      ) {
         throw new HttpError(
           409,
           'Conflict',
@@ -153,7 +165,11 @@ export class UsersController extends Controller<User> {
         throw new HttpError(404, 'Not Found', 'Pub not found');
       }
 
-      if (!user.visitado.find((visitedPub) => visitedPub.id === pub.id)) {
+      if (
+        !user.visitado.find(
+          (visitedPub) => visitedPub.id?.toString() === pub.id.toString()
+        )
+      ) {
         throw new HttpError(
           404,
           'Pub Found',

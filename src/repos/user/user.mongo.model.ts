@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose';
+import { Model, Schema, model } from 'mongoose';
 import { User } from '../../entities/user.model.js';
 
 export const userSchema = new Schema<User>({
@@ -43,12 +43,12 @@ export const userSchema = new Schema<User>({
 });
 
 userSchema.set('toJSON', {
-  transform(_document, returnedObject) {
-    returnedObject.id = returnedObject._id;
-    delete returnedObject._id;
-    delete returnedObject.__v;
-    delete returnedObject.password;
+  transform(_doc, returnedObject) {
+    returnedObject.id = returnedObject._id.toString();
+    delete (returnedObject as any)._id;
+    delete (returnedObject as any).__v;
+    delete (returnedObject as any).password;
   },
 });
 
-export const UserModel = model('User', userSchema, 'user');
+export const UserModel: Model<User> = model<User>('User', userSchema, 'user');
