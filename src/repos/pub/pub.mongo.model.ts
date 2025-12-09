@@ -34,9 +34,11 @@ export const pubSchema = new Schema<Pub>({
 export const PubModel = model('Pub', pubSchema, 'pub');
 
 pubSchema.set('toJSON', {
-  transform(_document, returnedObject) {
-    returnedObject.id = returnedObject._id;
-    delete returnedObject._id;
-    delete returnedObject.__v;
+  virtuals: true,
+  versionKey: false,
+  transform(_doc, returnedObject) {
+    returnedObject.id = returnedObject._id.toString();
+    delete (returnedObject as any)._id;
+    delete (returnedObject as any).__v;
   },
 });

@@ -43,11 +43,13 @@ export const userSchema = new Schema<User>({
 });
 
 userSchema.set('toJSON', {
-  transform(_document, returnedObject) {
-    returnedObject.id = returnedObject._id;
-    delete returnedObject._id;
-    delete returnedObject.__v;
-    delete returnedObject.password;
+  virtuals: true,
+  versionKey: false,
+  transform(_doc, returnedObject) {
+    returnedObject.id = returnedObject._id.toString();
+    delete (returnedObject as any)._id;
+    delete (returnedObject as any).__v;
+    delete (returnedObject as any).password;
   },
 });
 
