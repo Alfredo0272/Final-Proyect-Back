@@ -11,6 +11,10 @@ debug('Starting server');
 dbConnect()
   .then((mongoose) => {
     server.listen(PORT);
+    if (!mongoose.connection.db) {
+      throw new Error('Database not initialized');
+    }
+
     debug('Connected to DB:', mongoose.connection.db.databaseName);
   })
   .catch((error) => server.emit('error', error));
