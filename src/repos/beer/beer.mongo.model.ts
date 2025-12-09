@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose';
+import { Model, Schema, model } from 'mongoose';
 import { Beer } from '../../entities/beer.model.js';
 
 export const beerSchema = new Schema<Beer>({
@@ -36,7 +36,7 @@ export const beerSchema = new Schema<Beer>({
   },
 });
 
-export const BeerModel = model('Beer', beerSchema, 'beers');
+export const BeerModel: Model<Beer> = model<Beer>('Beer', beerSchema, 'beers');
 
 beerSchema.set('toJSON', {
   virtuals: true,

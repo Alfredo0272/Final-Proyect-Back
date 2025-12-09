@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose';
+import { Model, Schema, model } from 'mongoose';
 import { Pub } from '../../entities/pub.model.js';
 
 export const pubSchema = new Schema<Pub>({
@@ -31,7 +31,7 @@ export const pubSchema = new Schema<Pub>({
   beers: [{ type: Schema.Types.ObjectId, ref: 'Beer' }],
 });
 
-export const PubModel = model('Pub', pubSchema, 'pub');
+export const PubModel: Model<Pub> = model<Pub>('Pub', pubSchema, 'pub');
 
 pubSchema.set('toJSON', {
   virtuals: true,

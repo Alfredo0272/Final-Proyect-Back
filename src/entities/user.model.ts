@@ -1,5 +1,4 @@
-import { Beer } from './beer.model';
-import { Pub } from './pub.model.js';
+import { Types } from 'mongoose';
 
 export type UserLogin = {
   email: string;
@@ -9,10 +8,10 @@ export type UserLogin = {
 export type User = UserLogin & {
   id: string;
   name: string;
-  surname: string;
-  age: number;
   userName: string;
-  probada: Beer[];
-  visitado: Pub[];
+  age: number;
+  surname: string;
   role: 'Admin' | 'User';
+  probada: Types.ObjectId[];
+  visitado: Types.ObjectId[];
 };

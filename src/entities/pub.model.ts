@@ -1,5 +1,5 @@
+import { Types } from 'mongoose';
 import { ImgData } from '../types/img.data';
-import { Beer } from './beer.model.js';
 
 export type Pub = {
   id: string;
@@ -8,5 +8,5 @@ export type Pub = {
   direction: string;
   owner: string;
   taps: number;
-  beers: Beer[];
+  beers: Types.ObjectId[];
 };

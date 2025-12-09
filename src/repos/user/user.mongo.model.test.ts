@@ -1,22 +1,25 @@
-import mongoose from 'mongoose';
-import { userSchema } from './user.mongo.model.js';
+import { UserModel } from './user.mongo.model.js';
 
-describe('When...', () => {
-  describe('should', () => {
-    test('should transform returned object correctly in toJSON method', () => {
-      const mockUserModel = mongoose.model('Users', userSchema);
-      const document = {
-        name: 'John Doe',
-        password: 'password123',
-        email: 'john.doe@example.com',
-        age: 25,
-        surname: 'Doe',
-      };
-
-      // eslint-disable-next-line new-cap
-      const userDocument = new mockUserModel(document);
-      const returnedObject = userDocument.toJSON();
-      expect(returnedObject._id).toBeUndefined();
+describe('Given UserModel', () => {
+  test('should transform returned object correctly in toJSON method', () => {
+    const document = new UserModel({
+      name: 'John Doe',
+      password: 'password123',
+      userName: 'johndoe',
+      email: 'john.doe@example.com',
+      age: 25,
+      surname: 'Doe',
+      role: 'User',
     });
+
+    const returnedObject = document.toJSON();
+
+    // 🔍 Comprobaciones correctas
+    expect(returnedObject._id).toBeUndefined();
+    expect(returnedObject.__v).toBeUndefined();
+    expect(returnedObject.password).toBeUndefined();
+    expect(returnedObject.id).toBeDefined();
+    expect(typeof returnedObject.id).toBe('string');
+    expect(returnedObject.name).toBe('John Doe');
   });
 });

@@ -10,6 +10,7 @@ const debug = createDebug('W9Final:beers:controller');
 
 export class BeerController extends Controller<Beer> {
   userRepo: UserMongoRepo;
+
   constructor(protected repo: BeerMongoRepo) {
     super(repo);
     this.userRepo = new UserMongoRepo();
@@ -19,13 +20,24 @@ export class BeerController extends Controller<Beer> {
   async createBeer(req: Request, res: Response, next: NextFunction) {
     try {
       const userID = req.params.id;
+
       const author = await this.userRepo.getById(userID);
-      req.body.author = author;
-      if (!req.file)
+      if (!author) {
+        throw new HttpError(404, 'Not Found', 'User not found');
+      }
+
+      // Después validar archivo
+      if (!req.file) {
         throw new HttpError(406, 'Not Acceptable', 'Invalid multer file');
+      }
+
+      req.body.author = author;
+
       const imgData = await this.cloudinaryService.uploadImage(req.file.path);
       req.body.beerImg = imgData;
+
       const result = await this.repo.create(req.body);
+
       res.status(201);
       res.statusMessage = 'Created';
       res.json(result);
